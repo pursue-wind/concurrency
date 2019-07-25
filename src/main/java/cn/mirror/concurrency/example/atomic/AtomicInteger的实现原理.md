@@ -1,5 +1,3 @@
-# Concurrency
-## Atomic 
 > 以AtomicInteger的 `incrementAndGet()` 为例
 
 ```java
@@ -32,5 +30,4 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 ```java
 public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);
 ```
-
 
