@@ -2,6 +2,7 @@ package cn.mirror.concurrency.example.atomic;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -15,5 +16,6 @@ public class AtomicReferenceExample {
         count.compareAndSet(2, 4);
         count.compareAndSet(3, 5);
         log.info("count: {}", count.get());
+
     }
 }

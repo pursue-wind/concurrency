@@ -3,9 +3,9 @@
 > 以AtomicInteger的 `incrementAndGet()` 为例
 
 ```java
-    public final int incrementAndGet() {
-        return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
-    }
+public final int incrementAndGet() {
+    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
+}
 ```
 
 > getAndAddInt 方法
