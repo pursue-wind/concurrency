@@ -16,6 +16,5 @@ public class AtomicReferenceExample {
         count.compareAndSet(2, 4);
         count.compareAndSet(3, 5);
         log.info("count: {}", count.get());
-
     }
 }
