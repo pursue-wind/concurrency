@@ -42,6 +42,4 @@ public class CopyOnWriteArrayListExample {
     private static void test(int i) {
         list.add(i);
     }
-
-
 }

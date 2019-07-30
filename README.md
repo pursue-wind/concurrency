@@ -350,6 +350,19 @@ public class ImmutableExample3 {
 - HashSet、TreeSet -> CopyOnWriteArraySet、ConcurrentSkipListSet
 
   > ` CopyOnWriteArraySet `底层使用 ` CopyOnWriteArrayList `，使用迭代器遍历时速度很快，并且不会和其它线程冲突
+  >
+  > ConcurrentSkipListSet是1.6新增的类，和TreeSet一样，支持自然排序，可以从构造里面传入比较器，居于Map集合，对于批量操作如addAll()，removeAll()，containsAll()，并不能保证原子性
+
+  ```
+  public class CopyOnWriteArraySet<E> extends AbstractSet<E>
+  
+  private final CopyOnWriteArrayList<E> al;
+  
+  public CopyOnWriteArraySet() {
+  	al = new CopyOnWriteArrayList<E>();
+  }
+  ```
+
+  
 
 - Collections.synchronizedXXX(List、Set、Map)
-
