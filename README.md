@@ -151,10 +151,10 @@ doSomeThingWithConfig(context);
 
 #### 有序性 - happens-before原则
 
-- **程序次序规则：**一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作
-- **锁定规则：**一个unLock操作先行发生于后面对同一个锁的lock操作
-- **volatile变量规则：**对一个变量的写操作先行发生于后面对这个变量的读操作
-- **传递规则：**如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C
+- **程序次序规则**：一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作
+- **锁定规则**：一个unLock操作先行发生于后面对同一个锁的lock操作
+- **volatile变量规则**：对一个变量的写操作先行发生于后面对这个变量的读操作
+- **传递规则**：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C
 - 线程启动原则：Thread对象的start() 方法先行发生于此线程的每一个动作
 - 线程中断操作：对线程的interrupt() 方法的调用先行发生于被中断线程的代码检测到中断事件的发生
 - 线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join() 方法结束、Thread.isAlive() 的返回值手段检测到线程已经终止执行
@@ -170,8 +170,8 @@ doSomeThingWithConfig(context);
 
 ### 发布对象
 
-- **发布对象：**使一个对象能够在当前范围之外的代码所使用
-- **对象逸出：**一种错误的发布当一个对象还没有构造完成时，就使他被其它的线程所见
+- **发布对象**：使一个对象能够在当前范围之外的代码所使用
+- **对象逸出**：一种错误的发布当一个对象还没有构造完成时，就使他被其它的线程所见
 
 #### 发布对象 - 不安全示例
 
@@ -278,3 +278,35 @@ public class SingletonExample4 {
 - 创建不可变对象
   - Collections.unmodifiableXXX: Collection, List, Map, Set...
   - Guava: ImmutableXXX: Collection, List, Map, Set...
+
+```java
+public class ImmutableExample3 {
+    private final static ImmutableList<Integer> list = ImmutableList.of(1, 2, 3, 4);
+    private final static ImmutableSet<Integer> set = ImmutableSet.copyOf(list);
+    private final static ImmutableMap<Integer, Integer> map = ImmutableMap.of(1, 1, 2, 2, 3, 3);
+    private final static ImmutableMap<Integer, Integer> map2 = ImmutableMap.<Integer, Integer>builder().put(1, 1).put(2, 2).build();
+
+    public static void main(String[] args) {
+        //下面的运行会抛出 UnsupportedOperationException 异常
+        list.add(1);
+        set.add(1);
+        map.put(1, 2);
+    }
+}
+```
+
+### 线程封闭
+
+- Ad-hoc 线程封闭：程序控制实现，最糟糕，忽略
+- 堆栈封闭：局部变量，无并发问题
+- ThreadLocal 线程封闭：特别好的封闭方法
+
+### 线程不安全类与写法
+
+- StringBuilder -> StringBuffer
+- SimpleDateFormat -> JodaTime
+
+
+
+ 
+
