@@ -21,8 +21,8 @@ public class CountExample {
     public static void main(String[] args) throws InterruptedException {
         long start = System.currentTimeMillis();
         ExecutorService executorService = Executors.newCachedThreadPool();
-        final Semaphore semaphore = new Semaphore(clientTotal);
-        final CountDownLatch countDownLatch = new CountDownLatch(threadTotal);
+        final Semaphore semaphore = new Semaphore(threadTotal);
+        final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         for (int i = 0; i < clientTotal; i++) {
             executorService.execute(() -> {
                 try {

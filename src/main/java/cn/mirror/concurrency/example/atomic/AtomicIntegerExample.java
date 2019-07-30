@@ -22,8 +22,8 @@ public class AtomicIntegerExample {
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        final Semaphore semaphore = new Semaphore(clientTotal);
-        final CountDownLatch countDownLatch = new CountDownLatch(threadTotal);
+        final Semaphore semaphore = new Semaphore(threadTotal);
+        final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         for (int i = 0; i < clientTotal; i++) {
             executorService.execute(() -> {
                 try {

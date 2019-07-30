@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -28,8 +29,8 @@ public class JodaTimeExample {
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        final Semaphore semaphore = new Semaphore(clientTotal);
-        final CountDownLatch countDownLatch = new CountDownLatch(threadTotal);
+        final Semaphore semaphore = new Semaphore(threadTotal);
+        final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         for (int i = 0; i < clientTotal; i++) {
             final int count = i;
             executorService.execute(() -> {
@@ -50,5 +51,6 @@ public class JodaTimeExample {
     private static void test(int count) {
         Date date = DateTime.parse("20180808", dateTimeFormatter).toDate();
         log.info("{} - {}", date, count);
+
     }
 }

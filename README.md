@@ -262,9 +262,7 @@ public class SingletonExample4 {
 }
 ```
 
-
-
-### 不可变对象
+## 不可变对象
 
 - 不可变对象满足的条件
   - 对象创建后其状态就不能修改
@@ -305,8 +303,53 @@ public class ImmutableExample3 {
 
 - StringBuilder -> StringBuffer
 - SimpleDateFormat -> JodaTime
+- ArrayList，HashSet，HashMap等Collections
 
+- 先检查再执行：if(condition(a)){ handle(a); }
 
+## 同步容器
 
- 
+- ArrayList -> Vector，Stack
+- HashMap -> HashTable（key，Value不能为null)
+- Collections.synchronizedXXX(List、Set、Map)
+
+> 不能完全并发安全
+
+## 线程安全 - 并发容器 J.U.C
+
+- ArrayList -> CopyOnWriteArrayList
+
+  > 读操作在原数组上进行，当有新的元素添加进来时，复制一个数组进行写操作，完成操作后将原有数组指向新的数组，add操作是在锁的保护下进行的
+  >
+  > 缺点：拷贝数组消耗内存，元素过多可能导致YoungGC或者FullGC，不能用于实时读的场景，适合读多写少的场景
+  >
+  > 思想：读写分离，最终一致性，使用时另外开辟空间解决并发冲突
+
+  ```java
+  public class CopyOnWriteArrayList<E>
+      implements List<E>, RandomAccess, Cloneable...
+    
+  public boolean add(E e) {
+      final ReentrantLock lock = this.lock;
+      lock.lock();
+      try {
+          Object[] elements = getArray();
+          int len = elements.length;
+          Object[] newElements = Arrays.copyOf(elements, len + 1);
+          newElements[len] = e;
+          setArray(newElements);
+          return true;
+      } finally {
+          lock.unlock();
+      }
+  }
+  ```
+
+  
+
+- HashSet、TreeSet -> CopyOnWriteArraySet、ConcurrentSkipListSet
+
+  > ` CopyOnWriteArraySet `底层使用 ` CopyOnWriteArrayList `，使用迭代器遍历时速度很快，并且不会和其它线程冲突
+
+- Collections.synchronizedXXX(List、Set、Map)
 
