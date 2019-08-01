@@ -11,11 +11,11 @@ import java.util.concurrent.*;
  */
 @Slf4j
 @ThreadSafe
-public class ConcurrentHashMapExample {
+public class ConcurrentSkipListMapExample {
 
     private final static int CLIENT_TOTAL = 10000000;
     private final static int THREAD_TOTAL = 5000000;
-    private static final Map<Integer, Integer> MAP = new ConcurrentHashMap<>();
+    private static final Map<Integer, Integer> MAP = new ConcurrentSkipListMap<>();
 
     public static void main(String[] args) throws InterruptedException {
         final long start = System.currentTimeMillis();
@@ -31,7 +31,7 @@ public class ConcurrentHashMapExample {
                     update(count);
                     semaphore.release();
                 } catch (InterruptedException e) {
-                    log.error("{}", e.getMessage());
+                    log.error(e.getMessage());
                 }
             }, pool);
             countDownLatch.countDown();
@@ -39,7 +39,7 @@ public class ConcurrentHashMapExample {
         countDownLatch.await();
         pool.shutdown();
         final long end = System.currentTimeMillis();
-        log.info("ConcurrentHashMap - SIZE：{} - - {}", MAP.size(), (end - start));
+        log.info("ConcurrentSkipListMap - SIZE：{} - - {}", MAP.size(), (end - start));
     }
 
     private static void update(int i) {
